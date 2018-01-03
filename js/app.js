@@ -1,2 +1,9 @@
 const cat = document.querySelector('#cat');
-cat.addEventListener('click', function clickHandler(){console.log('click me baby one more time!');});
+const catCount = document.querySelector('#cat-count');
+var clickCount = 0;
+
+cat.addEventListener('click', function clickHandler(){
+	const catCount = document.querySelector('#cat-count');
+	clickCount++;
+	catCount.innerText = clickCount; 
+	});
