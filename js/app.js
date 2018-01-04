@@ -1,16 +1,18 @@
+const catNames = ['Scruffy', 'Mr. Fluffs'];
 
-function makeCatClickHandler(cat, catCounter){
+function makeCatClickHandler(name, catCounter){
 	var clickCount = 0;
 	return function(){
 		clickCount++;
-		catCounter.innerText = clickCount; 
+		catCounter.innerText = name + ' ' + clickCount; 
 		};
 };
-console.log(document.querySelector('#cat-count1'));
-const cat1 = document.querySelector('#cat1');
-const catOneHandler = makeCatClickHandler(document.querySelector('#cat1'),document.querySelector('#cat-count1'));
-cat1.addEventListener('click', catOneHandler);
 
-const cat2 = document.querySelector('#cat2');
-const catTwoHandler = makeCatClickHandler(document.querySelector('#cat2'),document.querySelector('#cat-count2'));
-cat2.addEventListener('click', catTwoHandler);
+for (var i = catNames.length ; i > 0; i--) {
+	const cat = document.querySelector('#cat' + i);
+	const catName = catNames[i-1];
+	const catCounter = document.querySelector('#cat'+i+' p');
+	const clickHandler = makeCatClickHandler(catName, catCounter); 
+	catCounter.innerText = catName;
+	cat.addEventListener('click', clickHandler);
+}
