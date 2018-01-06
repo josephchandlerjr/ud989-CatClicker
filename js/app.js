@@ -1,4 +1,5 @@
-const catNames = ['Scruffy', 'Mr. Fluffs'];
+const catNames = ['Scruffy', 'Mr. Fluffs', 'Sugar'];
+const container = document.querySelector('.container');
 
 function createCat(catNum){
 	const catDiv =   document.createElement('div');   // make a div
@@ -16,12 +17,8 @@ function createCat(catNum){
 	catDiv.appendChild(catImg);
 	catDiv.appendChild(catCount);
 	
-	const container = document.querySelector('.container');
-	container.appendChild(catDiv);
+	return catDiv;
 };
-
-
-
 
 function makeCatClickHandler(name, catCounter){
 	var clickCount = 0;
@@ -31,14 +28,13 @@ function makeCatClickHandler(name, catCounter){
 		};
 };
 
-for (var i = catNames.length ; i > 0; i--) { 
-	createCat(i);  // create html to display cat and counter
+for (var i = 0 ; i < catNames.length; i++) { 
+	var thisCat = createCat(i);  // create html to display cat and counter
 
-	const cat = document.querySelector('#cat' + i);
-	const catName = catNames[i-1];
-	const catCounter = document.querySelector('#cat'+i+' p');
+	var counter = thisCat.querySelector('p')
+	var clickHandler = makeCatClickHandler(catNames[i], counter);
 	
-	const clickHandler = makeCatClickHandler(catName, catCounter);
-	catCounter.innerText = catName;
-	cat.addEventListener('click', clickHandler);
+	counter.innerText = catNames[i];
+	thisCat.addEventListener('click', clickHandler);
+	container.appendChild(thisCat);
 }
