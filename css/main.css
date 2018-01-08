@@ -9,6 +9,9 @@ html, body {
 	max-width: 900px;
 	margin: auto auto;
 }
+#menu-container {
+	width: 51%;
+}
 
 .cat {
 	height: 320px;
