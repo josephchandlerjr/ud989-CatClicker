@@ -11,6 +11,7 @@ catMenu.addEventListener('change', function (event) {
 });
 
 
+
 function createCat(catNum){
 	const catDiv =   document.createElement('div');   // make a div
 	catDiv.classList.add('cat');
@@ -36,7 +37,6 @@ function createCatMenuItem(catName, catNum){
 	const catOption = document.createElement('option');
 	catOption.setAttribute('value', catNum);
 	catOption.innerText = catName;
-	catOption.addEventListener('click', function(){console.log('clicked');});
 	catMenu.appendChild(catOption);
 };
 
@@ -63,3 +63,6 @@ for (var i = 0 ; i < catNames.length; i++) {
 
 currentCat = document.querySelector('.cat');
 currentCat.classList.toggle('hidden');
+
+
+
