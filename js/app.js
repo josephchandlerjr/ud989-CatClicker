@@ -1,7 +1,6 @@
 
 var Model = {
-	catNames: ['Scruffy', 'Mr. Fluffs', 'Sugar & Spice','Tiger','Lydia'],
-	catList: [],
+	catNames: ['Scruffy','Mr. Fluffs','Sugar & Spice','Tiger','Lydia'],
 	init: function(){
 		this.catList = [];
 		this.catNames.forEach(function(cat, ix){ 
