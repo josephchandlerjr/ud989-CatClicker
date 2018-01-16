@@ -7,35 +7,25 @@ var Model = {
 			Model.catList.push({
 				name: cat,
 				number: ix,
-				visible: false
 			});
 		});
-		this.catList[0].visible = true;
 	}
 };
 
 var Octopus = {
 	init: function(){
 		Model.init();
-		CatMenuView.init(Model.catNames); // give it the cat names option tags
-		CatView.init(Model.catList); // give it the catList to build DOM elements
+		CatMenuView.init(Model.catNames); 
+		CatView.init(Model.catList); 
 	},
-	update: function(newCatNum){  //called by CatMenuView. this tells catView to update cat shown
-		CatView.update(newCatNum); // give it the catList to build divs
+	update: function(newCatNum){  
+		CatView.update(newCatNum); 
 	}
 }
 	
-var CatMenuView = { 			//builds menu with event listener for change. Listener will ask Octopus to update
-	init: function(catList) {
-		container = document.querySelector('.container');   
-		container.innerHTML = '';
-		menuContainer = document.createElement('div');
-		menuContainer.setAttribute('id', 'menu-container');
-		this.catMenu = document.createElement('select');
-		this.catMenu.setAttribute('id', 'catMenu');
-		menuContainer.appendChild(this.catMenu);
-		container.appendChild(menuContainer);
-
+var CatMenuView = { 			
+	init: function(catList) {	//
+		this.catMenu = document.querySelector('#catMenu');
 		catList.forEach(function(elem, ix){ CatMenuView.createCatMenuItem(elem,ix);});
 		this.catMenu.addEventListener('change', function (event) {
 			Octopus.update(event.target.value);
@@ -56,38 +46,28 @@ var CatView = {
 		catList.forEach(function(elem, ix){
 				CatView.catList.push(CatView.createCat(ix, elem));
 		});
-		this.render();
+		this.render(0);
  	},
 	update: function(newCatNum){
-		this.container.lastChild.classList.toggle('hidden');
-		this.catList[newCatNum].classList.toggle('hidden');
 		this.container.removeChild(this.container.lastChild);
-		this.render();
+		this.render(newCatNum);
 	},
-	render: function(){
-		for (var i=0; i < this.catList.length; i++) {
-			if (!this.catList[i].classList.contains('hidden')){
-				this.container.appendChild(this.catList[i]);
-				break; // should only be one
-			};
-		}
+	render: function(i){
+		this.container.appendChild(this.catList[i]);
 	},
 	createCat: function(catNum, cat){
 		var catDiv =   document.createElement('div');   // make a div
 		catDiv.classList.add('cat');
-		if (!cat.visible){ catDiv.classList.add('hidden'); }
-		catDiv.setAttribute('id', 'cat'+catNum);
 		
 		var catImg =   document.createElement('img');  // make a img
 		catImg.classList.add('cat-pic');
 		catImg.setAttribute('src', 'src/cat'+catNum+'.jpg');
 		catImg.setAttribute('alt', 'kitty cat');
 		
-		var catCount = document.createElement('p');     // make a p tag to hold cat name and counter
+		var catCount = document.createElement('p');
+		catCount.innerText = cat.name;     
 		catCount.classList.add('cat-count');
-
 		var clickHandler = this.makeCatClickHandler(cat.name, catCount);
-		catCount.innerText = cat.name;
 		catDiv.addEventListener('click', clickHandler);
 
 		catDiv.appendChild(catImg);	
