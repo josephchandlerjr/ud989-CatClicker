@@ -7,6 +7,7 @@ var Model = {
 			Model.catList.push({
 				name: cat,
 				number: ix,
+				clicks: 0
 			});
 		});
 	}
@@ -19,8 +20,13 @@ var Octopus = {
 		CatView.init(Model.catList); 
 	},
 	update: function(newCatNum){  
-		CatView.update(newCatNum); 
+		CatView.update(Model.catList, newCatNum); 
+	},
+	updateView: function(catNum){
+		Model.catList[catNum].clicks++;
+		CatView.update(Model.catList, catNum);
 	}
+
 }
 	
 var CatMenuView = { 			
@@ -43,17 +49,14 @@ var CatView = {
 	catList: [],
 	container: document.querySelector('.container'),
 	init: function(catList){
-		catList.forEach(function(elem, ix){
-				CatView.catList.push(CatView.createCat(ix, elem));
-		});
-		this.render(0);
+		this.render(catList, 0);
  	},
-	update: function(newCatNum){
+	update: function(catList,newCatNum){
 		this.container.removeChild(this.container.lastChild);
-		this.render(newCatNum);
+		this.render(catList, newCatNum);
 	},
-	render: function(i){
-		this.container.appendChild(this.catList[i]);
+	render: function(catList, ix){
+		this.container.appendChild(this.createCat(ix, catList[ix]));
 	},
 	createCat: function(catNum, cat){
 		var catDiv =   document.createElement('div');   // make a div
@@ -65,20 +68,18 @@ var CatView = {
 		catImg.setAttribute('alt', 'kitty cat');
 		
 		var catCount = document.createElement('p');
-		catCount.innerText = cat.name;     
+		catCount.innerText = cat.name + ' ' + cat.clicks;     
 		catCount.classList.add('cat-count');
-		var clickHandler = this.makeCatClickHandler(cat.name, catCount);
+		var clickHandler = this.makeCatClickHandler(catNum, catCount);
 		catDiv.addEventListener('click', clickHandler);
 
 		catDiv.appendChild(catImg);	
 		catDiv.appendChild(catCount);		
 		return catDiv;
 	},
-	makeCatClickHandler: function(name, catCounter){
-		var clickCount = 0;
+	makeCatClickHandler: function(ix, catCounter){
 		return function(){
-			clickCount++;
-			catCounter.innerText = name + ' ' + clickCount; 
+			Octopus.updateView(ix);
 			};
 	},
 };
