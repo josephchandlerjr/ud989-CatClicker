@@ -13,10 +13,9 @@ var model = {
 				imgSrc: 'src/cat'+ix+'.jpg'
 			});
 		});
-		this.setCurrentCat(this.getCats()[0]);
-
+		this.setCurrentCat(0);
 	},
-	setCurrentCat: function(cat){ this.currentCat = cat; },
+	setCurrentCat: function(num){ this.currentCat = this.getCats()[num]; },
 	getCats: function(){return this.catList;},
 	getCurrentCat: function(){ return this.currentCat; },
 	getCatNames: function() { return this.catNames; }
@@ -26,15 +25,15 @@ var octopus = {
 	init: function(){
 		model.init();
 		menuView.init(model.getCatNames()); 
-		view.init(model.getCats()); 
+		view.init(model.getCurrentCat()); 
 	},
 	update: function(newCatNum){  
 		model.setCurrentCat(newCatNum);
-		view.update(model.catList, newCatNum); 
+		view.update(model.getCurrentCat()); 
 	},
 	updateClicks: function(catNum){
 		model.getCats()[catNum].clicks++;
-		view.update(model.getCats(), catNum);   // this'll always be current cat sooooooooooo
+		view.update(model.getCurrentCat());   // this'll always be current cat sooooooooooo
 	},
 	getCurrentCat: function() { return model.getCurrentCat(); }
 }
@@ -60,26 +59,26 @@ var view = {
 	init: function(catList){
 		this.render(catList, 0);
  	},
-	update: function(catList,newCatNum){
+	update: function(cat){
 		this.container.removeChild(this.container.lastChild);
-		this.render(catList, newCatNum);
+		this.render(cat);
 	},
-	render: function(catList, ix){
-		this.container.appendChild(this.createCat(ix, catList[ix]));
+	render: function(cat){
+		this.container.appendChild(this.createCat(cat));
 	},
-	createCat: function(catNum, cat){
+	createCat: function(cat){
 		var catDiv =   document.createElement('div');   // make a div
 		catDiv.classList.add('cat');
 		
 		var catImg =   document.createElement('img');  // make a img
 		catImg.classList.add('cat-pic');
-		catImg.setAttribute('src', 'src/cat'+catNum+'.jpg');
+		catImg.setAttribute('src', cat.imgSrc);
 		catImg.setAttribute('alt', 'kitty cat');
 		
 		var catCount = document.createElement('p')     // make a p
 		catCount.innerText = cat.name + ' ' + cat.clicks;     
 		catCount.classList.add('cat-count');
-		catDiv.addEventListener('click', this.makeCatClickHandler(catNum));
+		catDiv.addEventListener('click', this.makeCatClickHandler(cat.number));
 
 		catDiv.appendChild(catImg);	
 		catDiv.appendChild(catCount);		
