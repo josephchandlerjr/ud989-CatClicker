@@ -14,17 +14,18 @@ var model = {
 			});
 		});
 		this.setCurrentCat(this.getCats()[0]);
-		console.log(this.catList);
+
 	},
-	setCurrentCat: function(num){ this.currentCat = this.catList[num]; },
+	setCurrentCat: function(cat){ this.currentCat = cat; },
 	getCats: function(){return this.catList;},
-	getCurrentCat: function(){ return this.currentCat; }
+	getCurrentCat: function(){ return this.currentCat; },
+	getCatNames: function() { return this.catNames; }
 };
 
 var octopus = {
 	init: function(){
 		model.init();
-		menuView.init(model.catNames); 
+		menuView.init(model.getCatNames()); 
 		view.init(model.getCats()); 
 	},
 	update: function(newCatNum){  
