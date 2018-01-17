@@ -1,32 +1,41 @@
 
 var model = {
 	catNames: ['Scruffy','Mr. Fluffs','Sugar & Spice','Tiger','Lydia'],
+	currentCat: null,
+	catList: null,
 	init: function(){
 		this.catList = [];
 		this.catNames.forEach(function(cat, ix){ 
 			model.catList.push({
 				name: cat,
 				number: ix,
-				clicks: 0
+				clicks: 0,
+				imgSrc: 'src/cat'+ix+'.jpg'
 			});
 		});
+		this.setCurrentCat(this.getCats()[0]);
+		console.log(this.catList);
 	},
-	getCats: function() { return this.catList; }
+	setCurrentCat: function(num){ this.currentCat = this.catList[num]; },
+	getCats: function(){return this.catList;},
+	getCurrentCat: function(){ return this.currentCat; }
 };
 
 var octopus = {
 	init: function(){
 		model.init();
 		menuView.init(model.catNames); 
-		view.init(model.catList); 
+		view.init(model.getCats()); 
 	},
 	update: function(newCatNum){  
+		model.setCurrentCat(newCatNum);
 		view.update(model.catList, newCatNum); 
 	},
-	updateView: function(catNum){
-		model.catList[catNum].clicks++;
-		view.update(model.catList, catNum);
-	}
+	updateClicks: function(catNum){
+		model.getCats()[catNum].clicks++;
+		view.update(model.getCats(), catNum);   // this'll always be current cat sooooooooooo
+	},
+	getCurrentCat: function() { return model.getCurrentCat(); }
 }
 	
 var menuView = { 			
@@ -76,7 +85,7 @@ var view = {
 		return catDiv;
 	},
 	makeCatClickHandler: function(ix){
-		return function(){ octopus.updateView(ix);};
+		return function(){ octopus.updateClicks(ix);};
 	},
 };
 
