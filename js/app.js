@@ -24,7 +24,7 @@ var model = {
 var octopus = {
 	init: function(){
 		model.init();
-		menuView.init(model.getCatNames()); 
+		menuView.init(model.getCats()); 
 		view.init(model.getCurrentCat()); 
 	},
 	update: function(newCatNum){  
@@ -39,17 +39,17 @@ var octopus = {
 }
 	
 var menuView = { 			
-	init: function(catList) {
+	init: function(cats) {
 		this.catMenu = document.querySelector('#catMenu');
-		catList.forEach(function(elem, ix){ menuView.createCatMenuItem(elem,ix);});
+		cats.forEach(function(cat){menuView.createCatMenuItem(cat);});
 		this.catMenu.addEventListener('change', function (event) {
 			octopus.update(event.target.value);
 		});
 	},
-	createCatMenuItem: function(catName, catNum){
+	createCatMenuItem: function(cat){
 		var catOption = document.createElement('option');
-		catOption.setAttribute('value', catNum);
-		catOption.innerText = catName;
+		catOption.setAttribute('value', cat.number);
+		catOption.innerText = cat.name;
 		this.catMenu.appendChild(catOption);
 	}
 };
