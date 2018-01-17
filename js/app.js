@@ -43,7 +43,7 @@ var menuView = {
 	init: function(cats) {  // takes a list of cat objects and builds menu
 		this.catMenu = document.querySelector('#catMenu');
 		this.render(cats);
-		},
+	},
 	render: function(cats){
 		cats.forEach(function(cat){menuView.createCatMenuItem(cat);});
 		this.catMenu.addEventListener('change', function (event) {
