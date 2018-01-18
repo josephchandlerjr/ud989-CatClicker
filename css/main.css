@@ -31,7 +31,7 @@ html, body {
 	height: 10%;
 }
 
-#adminForm {
+#adminForm, #cancel, #save{
 	display: None;
 }
 
