@@ -64,6 +64,10 @@ var view = {
 		this.adminNameField = document.querySelector("#name");
 		this.adminURLField = document.querySelector("#imgURL");
 		this.adminClicksField = document.querySelector("#clicks");
+		this.adminCancelButton = document.querySelector('#cancel');
+		this.adminSaveButton = document.querySelector('#save');
+		console.log(this.adminSaveButton);
+		console.log(this.adminCancelButton);
 		this.render(cat);
  	},
 	update: function(cat){
