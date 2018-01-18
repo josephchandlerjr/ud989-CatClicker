@@ -31,3 +31,7 @@ html, body {
 	height: 10%;
 }
 
+#adminForm {
+	display: None;
+}
+
