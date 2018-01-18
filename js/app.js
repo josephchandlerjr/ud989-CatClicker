@@ -61,6 +61,9 @@ var menuView = {
 var view = {
 	container: document.querySelector('.container'),
 	init: function(cat){
+		this.adminNameField = document.querySelector("#name");
+		this.adminURLField = document.querySelector("#imgURL");
+		this.adminClicksField = document.querySelector("#clicks");
 		this.render(cat);
  	},
 	update: function(cat){
