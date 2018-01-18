@@ -66,10 +66,16 @@ var view = {
 		this.adminClicksField = document.querySelector("#clicks");
 		this.adminCancelButton = document.querySelector('#cancel');
 		this.adminSaveButton = document.querySelector('#save');
+		this.adminForm = document.querySelector('#adminForm');
 		this.adminButton = document.querySelector('#admin');
 
 		this.render(cat);
  	},
+	toggleAdminDisplay: function(){
+		this.adminCancelButton.classList.toggle('hidden');
+		this.adminSaveButton.classList.toggle('hidden');
+		this.adminForm.classList.toggle('hidden');		
+	},
 	update: function(cat){
 		this.container.removeChild(this.container.lastChild);
 		this.render(cat);
