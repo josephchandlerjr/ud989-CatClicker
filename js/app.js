@@ -18,7 +18,13 @@ var model = {
 	setCurrentCat: function(num){ this.currentCat = this.getCats()[num]; },
 	getCats: function(){return this.catList;},
 	getCurrentCat: function(){ return this.currentCat; },
-	getCatNames: function() { return this.catNames; }
+	getCatNames: function() { return this.catNames; },
+	updateCat: function(name,src,clicks){
+		currentCat = this.getCurrentCat();
+		currentCat.name = name;
+		currentCat.imgSrc = src;
+		currentCat.clicks = clicks;
+	}
 };
 
 var octopus = {
@@ -35,7 +41,11 @@ var octopus = {
 		model.getCats()[catNum].clicks++;
 		view.update(model.getCurrentCat()); 
 	},
-	getCurrentCat: function() { return model.getCurrentCat(); }
+	getCurrentCat: function() { return model.getCurrentCat(); },
+	updateCat: function(name,src,clicks){
+		model.updateCat(name,src,clicks);
+		this.update(model.getCurrentCat().number);
+		}
 }
 	
 var menuView = { 			
@@ -70,6 +80,11 @@ var view = {
 				};
 			}(this));
 		this.adminSaveButton = document.querySelector('#save');
+		this.adminSaveButton.addEventListener('click', function(self){
+			return function(){
+				self.updateCat();
+				};
+				}(this));
 		this.adminForm = document.querySelector('#adminForm');		
 		this.adminButton = document.querySelector('#admin');
 		this.adminButton.addEventListener('click', function(self){
@@ -79,6 +94,10 @@ var view = {
 			}(this));
 		this.render(cat);
  	},
+	updateCat: function(){octopus.updateCat(this.adminNameField.value,
+											this.adminURLField.value,
+											this.adminClicksField.value
+											);},
 	toggleAdminDisplay: function(){
 		this.adminCancelButton.classList.toggle('hidden');
 		this.adminSaveButton.classList.toggle('hidden');
