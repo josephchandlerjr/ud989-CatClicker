@@ -30,11 +30,10 @@ var octopus = {
 	update: function(newCatNum){  
 		model.setCurrentCat(newCatNum);
 		view.update(model.getCurrentCat()); 
-		console.log(model.getCurrentCat());
 	},
 	updateClicks: function(catNum){
 		model.getCats()[catNum].clicks++;
-		view.update(model.getCurrentCat());   // this'll always be current cat sooooooooooo
+		view.update(model.getCurrentCat()); 
 	},
 	getCurrentCat: function() { return model.getCurrentCat(); }
 }
@@ -66,12 +65,10 @@ var view = {
 		this.adminClicksField = document.querySelector("#clicks");
 		this.adminCancelButton = document.querySelector('#cancel');
 		this.adminSaveButton = document.querySelector('#save');
-		this.adminForm = document.querySelector('#adminForm');
-		
+		this.adminForm = document.querySelector('#adminForm');		
 		this.adminButton = document.querySelector('#admin');
 		this.adminButton.addEventListener('click', function(self){
 			return function(){
-				console.log(self);
 				self.toggleAdminDisplay();
 				};
 			}(this));
@@ -82,12 +79,19 @@ var view = {
 		this.adminSaveButton.classList.toggle('hidden');
 		this.adminForm.classList.toggle('hidden');		
 	},
+	populateAdminFields: function(){
+		var cat = octopus.getCurrentCat();
+		this.adminNameField.value = cat.name;
+		this.adminURLField.value = cat.imgSrc;
+		this.adminClicksField.value = cat.clicks;
+	},
 	update: function(cat){
 		this.container.removeChild(this.container.lastChild);
 		this.render(cat);
 	},
 	render: function(cat){
 		this.container.appendChild(this.createCat(cat));
+		this.populateAdminFields();
 	},
 	createCat: function(cat){
 		var catDiv =   document.createElement('div');   // make a div
