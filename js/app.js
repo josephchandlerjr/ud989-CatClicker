@@ -69,12 +69,15 @@ var view = {
 		this.adminForm = document.querySelector('#adminForm');
 		
 		this.adminButton = document.querySelector('#admin');
-		this.adminButton.addEventListener('click', view.toggleAdminDisplay);
-
+		this.adminButton.addEventListener('click', function(self){
+			return function(){
+				console.log(self);
+				self.toggleAdminDisplay();
+				};
+			}(this));
 		this.render(cat);
  	},
 	toggleAdminDisplay: function(){
-		console.log(this.adminSaveButton); problem here fo sho
 		this.adminCancelButton.classList.toggle('hidden');
 		this.adminSaveButton.classList.toggle('hidden');
 		this.adminForm.classList.toggle('hidden');		
