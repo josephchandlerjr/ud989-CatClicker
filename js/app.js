@@ -64,6 +64,11 @@ var view = {
 		this.adminURLField = document.querySelector("#imgURL");
 		this.adminClicksField = document.querySelector("#clicks");
 		this.adminCancelButton = document.querySelector('#cancel');
+		this.adminCancelButton.addEventListener('click', function(self){
+			return function(){
+				self.toggleAdminDisplay();
+				};
+			}(this));
 		this.adminSaveButton = document.querySelector('#save');
 		this.adminForm = document.querySelector('#adminForm');		
 		this.adminButton = document.querySelector('#admin');
