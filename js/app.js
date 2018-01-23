@@ -30,8 +30,8 @@ var model = {
 var octopus = {
 	init: function(){
 		model.init();
-		menuView.init(model.getCats()); 
-		view.init(model.getCurrentCat()); 
+		menuView.init(model.getCats(), this.getCurrentCat()); 
+		view.init(this.getCurrentCat()); 
 	},
 	update: function(newCatNum){  
 		model.setCurrentCat(newCatNum);
@@ -44,20 +44,23 @@ var octopus = {
 	getCurrentCat: function() { return model.getCurrentCat(); },
 	updateCat: function(name,src,clicks){
 		model.updateCat(name,src,clicks);
-		this.update(model.getCurrentCat().number);
+		menuView.init(model.getCats(), this.getCurrentCat()); 
+		view.update(this.getCurrentCat()); 
 		}
 }
 	
 var menuView = { 			
-	init: function(cats) {  // takes a list of cat objects and builds menu
+	init: function(cats, currentCat) {  // takes a list of cat objects and builds menu
 		this.catMenu = document.querySelector('#catMenu');
-		this.render(cats);
+		this.catMenu.innerHTML = '';
+		this.render(cats, currentCat);
 	},
-	render: function(cats){
+	render: function(cats, currentCat){
 		cats.forEach(function(cat){menuView.createCatMenuItem(cat);});
 		this.catMenu.addEventListener('change', function (event) {
 			octopus.update(event.target.value);
 		});
+		this.catMenu.value = currentCat.number;
 	},
 	createCatMenuItem: function(cat){  //takes cat object and appends option tag to catMenu
 		var catOption = document.createElement('option');
