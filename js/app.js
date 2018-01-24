@@ -102,6 +102,7 @@ var view = {
 											this.adminClicksField.value
 											);},
 	toggleAdminDisplay: function(){
+		this.populateAdminFields();
 		this.adminCancelButton.classList.toggle('hidden');
 		this.adminSaveButton.classList.toggle('hidden');
 		this.adminForm.classList.toggle('hidden');		
